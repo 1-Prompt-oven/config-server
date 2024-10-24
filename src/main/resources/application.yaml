@@ -7,9 +7,9 @@ spring:
         git:
           uri: https://github.com/Prompt-oven/config-server
           default-label: main
-          search-paths: 'configs/'
-          basedir: target/config-repo
+          search-paths: configs
           force-pull: true
+          basedir: target/config-repo
         
 
 server:
@@ -24,3 +24,7 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+logging:
+  level:
+    org.springframework.cloud.config: DEBUG
