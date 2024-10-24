@@ -1,7 +1,7 @@
 spring:
   application:
     name: discovery
-   cloud:
+  cloud:
     config:
       uri: http://localhost:8888
       fail-fast: true
@@ -12,3 +12,5 @@ eureka:
     fetch-registry: false
 server:
   port: 8761
+
+#this config from config-server
