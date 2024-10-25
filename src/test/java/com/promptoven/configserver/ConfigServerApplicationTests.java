@@ -59,7 +59,7 @@ class ConfigServerApplicationTests {
 			    "value": "test"
 			  }
 			}""";
-
+      
 		System.out.println("now testing /discovery/main");
 		System.out.println("expectedJson: " + expectedJson);
 		mockMvc.perform(get("/discovery/main"))
