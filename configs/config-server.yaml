@@ -7,10 +7,10 @@ spring:
         git:
           uri: https://github.com/Prompt-oven/config-server
           default-label: main
-          search-paths: configs
+          search-paths: 'configs/'
           force-pull: true
           basedir: target/config-repo
-
+        
 
 server:
   port: 8888
@@ -28,3 +28,4 @@ eureka:
 logging:
   level:
     org.springframework.cloud.config: DEBUG
+    org.springframework.cloud.config.server: DEBUG
