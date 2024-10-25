@@ -7,7 +7,8 @@ spring:
         git:
           uri: https://github.com/Prompt-oven/config-server
           default-label: main
-          search-paths: 'configs/'
+          search-paths:
+            - configs
           force-pull: true
           basedir: target/config-repo
         
@@ -15,15 +16,15 @@ spring:
 server:
   port: 8888
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+#    register-with-eureka: true
+#    fetch-registry: true
+#  instance:
+#    prefer-ip-address: true
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 logging:
   level:
