@@ -1,0 +1,19 @@
+# config-server/docker-compose.yml
+version: '3.8'
+services:
+  discovery-server:
+    image: astar5327/config-server:latest
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - msa-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  msa-network:
+    external: true

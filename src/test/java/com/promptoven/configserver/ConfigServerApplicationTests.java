@@ -43,15 +43,20 @@ class ConfigServerApplicationTests {
 			      "name": "discovery"
 			    },
 			    "config": {
-			      "import": "optional:configserver:http://localhost:8888"
+			      "import": "optional:configserver:http://config-server:8888"
 			    },
 			    "cloud": {
 			      "config": {
-			        "uri": "http://localhost:8888",
-			        "fail-fast": true
+			        "uri": "http://config-server:8888",
+			        "fail-fast": false
 			      }
 			    }
 			  },
+			  "eureka": {
+			    "client": {
+			      "registerWithEureka": false,
+			      "fetchRegistry": false
+			 },
 			  "server": {
 			    "port": 8761
 			  },
@@ -60,21 +65,21 @@ class ConfigServerApplicationTests {
 			  }
 			}""";
       
-		System.out.println("now testing /discovery/main");
+		System.out.println("now testing /discovery/default");
 		System.out.println("expectedJson: " + expectedJson);
-		mockMvc.perform(get("/discovery/main"))
+		mockMvc.perform(get("/discovery/default"))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType("application/json"))
 			.andDo(result -> System.out.println(result.getResponse().getContentAsString()))
 			.andExpect(content().json(expectedJson));
 
 	}
-	    @Autowired
+	@Autowired
     private TestRestTemplate restTemplate;
 
     @Test
     void testConfigServerExposeConfigEndpoint() {
-        ResponseEntity<String> response = restTemplate.getForEntity("/discovery/main", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("/discovery/default", String.class);
         System.out.println("Response status: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
