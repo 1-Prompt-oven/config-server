@@ -6,11 +6,12 @@ spring:
       server:
         git:
           uri: https://github.com/Prompt-oven/config-server
+          default-label: main
           search-paths:
             - configs
           force-pull: true
           basedir: target/config-repo
-        
+          try-master-branch: false
 
 server:
   port: 8888
