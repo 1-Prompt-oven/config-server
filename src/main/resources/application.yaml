@@ -6,7 +6,6 @@ spring:
       server:
         git:
           uri: https://github.com/Prompt-oven/config-server
-          default-label: main
           search-paths:
             - configs
           force-pull: true
