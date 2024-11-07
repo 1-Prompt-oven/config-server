@@ -31,7 +31,9 @@ spring:
       group-id: auth-service
   cloud:
     config:
-      name: auth-service, eventTopic
+      name:
+        - auth-service
+        - eventTopic
       fail-fast: false
 server:
   port: 0 # random port for security reasons
@@ -101,7 +103,9 @@ spring:
       group-id: auth-service
   cloud:
     config:
-      name: auth-service, eventTopic
+      name:
+        - auth-service
+        - eventTopic
       fail-fast: false
 server:
   port: 8080
