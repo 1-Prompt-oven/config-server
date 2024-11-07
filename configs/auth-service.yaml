@@ -48,7 +48,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
   kafka:
-    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
     consumer:
       group-id: auth-service
 server:
