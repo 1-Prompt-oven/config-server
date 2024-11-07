@@ -33,11 +33,11 @@ logging:
     org.springframework.cloud.config.server: DEBUG
 
 ---
+# application-prod.yml
 spring:
   config:
     activate:
       on-profile: prod
-
 eureka:
   client:
     serviceUrl:
@@ -45,5 +45,5 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
