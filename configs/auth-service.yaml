@@ -29,7 +29,6 @@ spring:
       on-profile: prod
     import:
       - classpath:eventTopic.yaml
-      - "optional:configserver:http://config-server:8888"
   data:
     redis:
       host: garnet
@@ -52,10 +51,6 @@ spring:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
     consumer:
       group-id: auth-service
-  cloud:
-    config:
-      name: auth-service,eventTopic
-      fail-fast: false
 server:
   port: 8080
   shutdown: graceful
@@ -74,7 +69,6 @@ spring:
   config:
     import:
       - classpath:eventTopic.yaml
-      - "optional:configserver:http://localhost:8888"
     activate:
       on-profile: local
   data:
@@ -98,10 +92,6 @@ spring:
     bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
     consumer:
       group-id: auth-service
-  cloud:
-    config:
-      name: auth-service,eventTopic
-      fail-fast: false
 server:
   port: 0 # random port for security reasons
   shutdown: graceful
