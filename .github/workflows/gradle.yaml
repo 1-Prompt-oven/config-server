@@ -58,7 +58,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo docker rm -f auth-service || true
+            sudo docker rm -f config-server || true
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/config-server
             cd /home/ubuntu/config-server
             echo "SPRING_PROFILES_ACTIVE=prod" > .env
