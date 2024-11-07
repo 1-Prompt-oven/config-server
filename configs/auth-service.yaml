@@ -1,45 +1,9 @@
 spring:
   application:
     name: auth-service
-  config:
-    import:
-      - classpath:eventTopic.yaml
   mail:
     password: "test value"
     username: "test value"
-  data:
-    redis:
-      host: localhost
-      port: 6379
-  datasource:
-    url: jdbc:mysql://localhost:3306/auth
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-  kafka:
-    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
-    consumer:
-      group-id: auth-service
-server:
-  port: 0 # random port for security reasons
-  shutdown: graceful
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: false
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 auth:
   challenge:
     expiration: 300000 # 5 minutes
@@ -57,12 +21,6 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
-logging:
-  level:
-    org.springframework.jdbc: DEBUG
-    org.springframework.transaction: DEBUG
-    org.springframework.orm.jpa: DEBUG
-
 ---
 # application-prod.yml
 spring:
@@ -71,6 +29,7 @@ spring:
       on-profile: prod
     import:
       - classpath:eventTopic.yaml
+      - "optional:configserver:http://config-server:8888"
   data:
     redis:
       host: garnet
@@ -93,6 +52,10 @@ spring:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
     consumer:
       group-id: auth-service
+  cloud:
+    config:
+      name: auth-service,eventTopic
+      fail-fast: false
 server:
   port: 8080
   shutdown: graceful
@@ -100,6 +63,57 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+---
+# application-local.yml
+spring:
+  config:
+    import:
+      - classpath:eventTopic.yaml
+      - "optional:configserver:http://localhost:8888"
+    activate:
+      on-profile: local
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  kafka:
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+    consumer:
+      group-id: auth-service
+  cloud:
+    config:
+      name: auth-service,eventTopic
+      fail-fast: false
+server:
+  port: 0 # random port for security reasons
+  shutdown: graceful
+logging:
+  level:
+    org.springframework.jdbc: DEBUG
+    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa: DEBUG
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
   instance:
