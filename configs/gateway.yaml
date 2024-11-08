@@ -120,11 +120,13 @@ logging:
 ---
 # application-prod.yml
 spring:
+  config:
+    activate:
+      on-profile: prod
   data:
     redis:
       host: garnet
       port: 6379
-
 eureka:
   client:
     serviceUrl:
@@ -132,4 +134,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
