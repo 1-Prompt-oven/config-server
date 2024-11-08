@@ -8,16 +8,24 @@ spring:
     web-application-type: reactive
   application:
     name: gateway
+  config:
+    import:
+      - classpath:roles.yaml
+  data:
+    redis:
+      host: localhost
+      port: 6379
   cloud:
     gateway:
       default-filters: # 기본 필터 설정
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+        - JwtAuthorizationFilter
       global-cors: # 글로벌 CORS 설정
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - "http://localhost:3000"
-            allowCredentials: true
+              - "*"
+            allowCredentials: off
             allowedHeaders:
               - x-requested-with
               - Authorization
@@ -31,45 +39,10 @@ spring:
               - GET
               - POST
               - DELETE
-      routes:
-        - id: auth-service
-          uri: lb://AUTH-SERVICE
-          predicates:
-            - Path=/auth-service/**
-          filters:
-            - StripPrefix=1
 
-        - id: product-service
-          uri: lb://PRODUCT-SERVICE
-          predicates:
-            - Path=/product-service/**
-          filters:
-            - StripPrefix=1
-        - id: settlement-service
-          uri: lb://SETTLEMENT-SERVICE
-          predicates:
-            - Path=/settlement-service/**
-          filters:
-            - StripPrefix=1
-        - id: cart-service
-          uri: lb://CART-SERVICE
-          predicates:
-            - Path=/cart-service/**
-          filters:
-            - StripPrefix=1
-
-        # JWT 이 필요한 경우
-        #- id: feed-service
-#          uri: lb://FEED-SERVICE
-#          predicates:
-#            - Path=/auth/**
-#          filters:
-#            - StripPrefix=1
-#            - JwtAuthenticationFilter
-  data:
-    redis:
-      host: localhost
-      port: 6379
+# Define just service names
+services:
+  names: AUTH-SERVICE,PRODUCT-SERVICE,SETTLEMENT-SERVICE,CART-SERVICE
 
 eureka:
     client:
@@ -112,9 +85,7 @@ jwt:
 
 logging:
   level:
-    org.springframework.jdbc: DEBUG
-    org.springframework.transaction: DEBUG
-    org.springframework.orm.jpa: DEBUG
+    org.springframework: INFO
 
 
 ---
@@ -127,6 +98,7 @@ spring:
     redis:
       host: garnet
       port: 6379
+
 eureka:
   client:
     serviceUrl:
@@ -134,4 +106,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: false
+    prefer-ip-address: true
