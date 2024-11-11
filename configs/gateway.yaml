@@ -94,7 +94,7 @@ spring:
       on-profile: prod
   data:
     redis:
-      host: 172.18.0.4
+      host: garnet
       port: 6379
       timeout: 5000
       lettuce:
