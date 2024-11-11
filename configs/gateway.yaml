@@ -80,6 +80,7 @@ logging:
     org.springframework: INFO
     org.springframework.cloud.gateway: DEBUG
     org.springdoc: DEBUG
+    org.springframework.web: DEBUG
 
 gateway:
   host: http://localhost:8000
