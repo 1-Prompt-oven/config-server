@@ -96,11 +96,15 @@ spring:
     redis:
       host: garnet
       port: 6379
-      timeout: 30000
-      connect-timeout: 30000
-      client-type: lettuce
+      timeout: 5000
+      connect-timeout: 5000
       lettuce:
-        shutdown-timeout: 30s
+        shutdown-timeout: 5s
+
+logging:
+  level:
+    io.lettuce.core: DEBUG
+    org.springframework.data.redis: DEBUG
 
 eureka:
   client:
