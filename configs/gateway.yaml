@@ -96,10 +96,6 @@ spring:
     redis:
       host: garnet
       port: 6379
-      timeout: 5000
-      connect-timeout: 5000
-      lettuce:
-        shutdown-timeout: 5s
 
 logging:
   level:
