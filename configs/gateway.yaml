@@ -97,11 +97,6 @@ spring:
       host: garnet
       port: 6379
 
-logging:
-  level:
-    io.lettuce.core: DEBUG
-    org.springframework.data.redis: DEBUG
-
 eureka:
   client:
     serviceUrl:
