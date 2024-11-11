@@ -31,7 +31,7 @@ spring:
       - classpath:eventTopic.yaml
   data:
     redis:
-      host: 172.31.34.161
+      host: 172.18.0.4
       port: 6379
   datasource:
     url: jdbc:mysql://mysql:3306/auth
