@@ -96,13 +96,11 @@ spring:
     redis:
       host: garnet
       port: 6379
-      timeout: 10000
-      connect-timeout: 10000
+      timeout: 30000
+      connect-timeout: 30000
       client-type: lettuce
       lettuce:
-        pool:
-          enabled: false  # Disable pool for now to simplify configuration
-        shutdown-timeout: 10s
+        shutdown-timeout: 30s
 
 eureka:
   client:
