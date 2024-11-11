@@ -94,7 +94,7 @@ spring:
       on-profile: prod
   data:
     redis:
-      host: garnet
+      host: 172.31.34.161
       port: 6379
 
 eureka:
