@@ -66,6 +66,8 @@ springdoc:
     path: /v3/api-docs
   cache:
     disabled: true
+  show-actuator: true
+  enable-native-support: true
 
 jwt:
   rsa:
