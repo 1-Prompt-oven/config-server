@@ -82,13 +82,6 @@ jwt:
     refresh: 86400000 # 24 hours
     access: 600000 # 10 minutes
 
-logging:
-  level:
-    org.springframework: INFO
-    org.springframework.cloud.gateway: DEBUG
-    org.springdoc: DEBUG
-    org.springframework.web: DEBUG
-
 gateway:
   host: http://localhost:8000
 
