@@ -39,7 +39,9 @@ spring:
               - POST
               - DELETE
               - OPTIONS #this is for swagger ui
-
+            exposed-headers:
+              - Authorization
+              - Refreshtoken
 eureka:
   client:
     serviceUrl:
@@ -83,7 +85,7 @@ jwt:
     access: 600000 # 10 minutes
 
 gateway:
-  host: http://localhost:8000
+  host: "http://localhost:8000"
 
 
 
@@ -108,4 +110,4 @@ eureka:
     prefer-ip-address: true
 
 gateway:
-  host: http://15.164.251.81:8000/
+  host: "http://15.164.251.81:8000/"
