@@ -5,3 +5,6 @@ member-nickname-update-event: member-nickname-updated
 member-withdraw-event: member-withdraw
 # Settlement Service Produced
 settlement-first-create-event: settlement-first-created
+# Profile Service Produced
+profile-picture-update-event: profile-picture-updated
+profile-nickname-update-request-event: profile-nickname-update-requested #Auth service produced
