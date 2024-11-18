@@ -110,4 +110,4 @@ eureka:
     prefer-ip-address: true
 
 gateway:
-  host: "http://15.164.251.81:8000/"
+  host: "http://api.promptoven.shop:8000/"
