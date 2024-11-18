@@ -1,10 +1,15 @@
 # Auth service produced
-member-ban-event: member-banned
-member-unban-event: member-unbanned
-member-nickname-update-event: member-nickname-updated
-member-withdraw-event: member-withdraw
+member-ban-event: member-banned # {memberUUID : String}
+member-unban-event: member-unbanned # {memberUUID : String}
+member-nickname-update-event: member-nickname-updated # {memberUUID : String, nickname : String}
+member-withdraw-event: member-withdraw # {memberUUID : String}
+
 # Settlement Service Produced
-settlement-first-create-event: settlement-first-created
+settlement-first-create-event: settlement-first-created # {memberUUID : String}
+
 # Profile Service Produced
-profile-picture-update-event: profile-picture-updated
-profile-nickname-update-request-event: profile-nickname-update-requested #Auth service produced
+profile-picture-update-event: profile-picture-updated # {memberUUID : String, picture : String}
+profile-nickname-update-request-event: profile-nickname-update-requested # {memberUUID : String, nickname : String}
+#profile-nickname-update-request-event의 경우는 Profile Service에서 발생하는 이벤트이며, Auth Service에서 이벤트를 받아 처리한다.
+#nickname의 경우 Auth Service가 관리하는 Member Table을 원천 값으로 하기 때문에, 다른 서비스에서 변경된 값을 처리하는 게 아니라
+#Auth Service에서 변경된 값을 받아 처리하는 것이다.
