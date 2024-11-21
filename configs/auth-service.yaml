@@ -2,8 +2,8 @@ spring:
   application:
     name: auth-service
   mail:
-    password: "test value"
-    username: "test value"
+    password: ${MAIL_PASSWORD}
+    username: kr.promptoven@gmail.com
 auth:
   challenge:
     expiration: 300000 # 5 minutes
