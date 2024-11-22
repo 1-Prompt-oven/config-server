@@ -58,10 +58,10 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
 
-    kafka:
-      text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
-      consumer:
-        group-id: settlement-service
+  kafka:
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+    consumer:
+      group-id: settlement-service
 server:
   port: 8080
   shutdown: graceful
