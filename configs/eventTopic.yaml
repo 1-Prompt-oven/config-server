@@ -16,3 +16,25 @@ profile-nickname-update-request-event: profile-nickname-update-requested # {memb
 
 # Payment Service Produced
 payment-create-event: payment-create-event # {paymentId : String, memberUUID : String, productUUID : List<String>}
+
+# Review Service Produced
+review-create-event: review-created
+# {  
+#    reviewId: Long,
+#    productUuid: String,
+#    authorUuid: String,
+#    authorProfileImage: String,
+#    authorNickname: String,
+#    star: int,
+#    contents: String,
+#    isDeleted: Boolean
+# }
+review-update-event: review-updated
+# {
+#    reviewId: Long,
+#    productUuid: String,
+#    contents: String,
+#    star: int,
+#    previousStar: int
+# }
+review-delete-event: review-deleted #{ reviewId: Long, productUuid: String, star: int }
