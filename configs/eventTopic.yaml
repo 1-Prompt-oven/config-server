@@ -37,4 +37,4 @@ review-update-event: review-updated
 #    star: int,
 #    previousStar: int
 # }
-review-delete-event: review-deleted #{ reviewId: Long, productUuid: String, star: int }
+review-delete-event: review-deleted # {reviewId: Long, productUuid: String, star: int}
