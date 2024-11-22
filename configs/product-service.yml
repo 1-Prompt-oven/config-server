@@ -1,0 +1,117 @@
+# 공통 설정
+spring:
+  profiles:
+    active: local
+  application:
+    name: product-service
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: always
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+  packages-to-scan: org.example.productservice  # 스캔할 패키지 명시
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  swagger-ui.operations-sorter: alpha
+
+logging:
+  level:
+    org.example.product_admin_service: DEBUG
+
+server:
+  shutdown: graceful
+
+encrypted:
+  secret-key: ${ENCRYPTED_SECRET_KEY}
+
+# local 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3307/promptoven_product
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      format_sql: true
+    generate-ddl: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: prompt_oven
+      username: root
+      password: root
+      authentication-database: admin
+      auto-index-creation: true
+  kafka:
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 8081  # random port for local development
+
+# prod 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://mysql:3306/promptoven_product
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create  # prod 환경에서는 validate 권장
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.MySQL8Dialect
+  data:
+    mongodb:
+      uri: mongodb://product-service-mongodb-1:27017/product_service
+      auto-index-creation: false  # prod 환경에서는 자동 인덱스 생성 비활성화 권장
+  kafka:
+    bootstrap-servers: kafka:9092, kafka:9093, kafka:9094
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 0  # 운영 환경에서도 랜덤 포트 사용 (Eureka 사용)
