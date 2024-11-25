@@ -1,0 +1,102 @@
+spring:
+  application:
+    name: review-service
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: always
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+  packages-to-scan: com.promptoven.reviewService  # 스캔할 패키지 명시
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
+logging:
+  level:
+    org.example.product_admin_service: DEBUG
+
+server:
+  shutdown: graceful
+
+# local 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3307/reviewService
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.MySQLDialect
+      format_sql: true
+    generate-ddl: true
+  kafka:
+    text-bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 0  # random port for local development
+
+
+
+# prod 설정
+---
+spring:
+  config:
+    import:
+      - classpath:eventTopic.yaml
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://mysql:3306/review
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # prod 환경에서는 validate 권장
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.MySQLDialect
+  kafka:
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 0
+
