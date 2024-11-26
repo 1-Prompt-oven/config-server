@@ -3,7 +3,7 @@ member-ban-event: member-banned # {memberUUID : String}
 member-unban-event: member-unbanned # {memberUUID : String}
 member-nickname-update-event: member-nickname-updated # {memberUUID : String, nickname : String}
 member-withdraw-event: member-withdraw # {memberUUID : String}
-member-register-event: member-registered # {memberUUID : String}
+member-register-event: member-registered # {memberUUID : String, nickname  : String}
 
 # Settlement Service Produced
 settlement-first-create-event: settlement-first-created # {memberUUID : String}
