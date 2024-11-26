@@ -30,8 +30,9 @@ logging:
 server:
   shutdown: graceful
 
-# local 설정
+
 ---
+# local 설정
 server:
   port: 0
 
@@ -61,7 +62,7 @@ spring:
       dialect: org.hibernate.dialect.MySQL8Dialect
 
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092,localhost:39092,localhost:49092}
+    text-bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092,localhost:39092,localhost:49092}
 
 eureka:
   instance:
@@ -73,8 +74,9 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
 
-# prod 설정
+
 ---
+# prod 설정
 spring:
   config:
     import:
@@ -111,4 +113,4 @@ eureka:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 server:
-  port: 0
+  port: 8080
