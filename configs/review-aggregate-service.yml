@@ -1,0 +1,116 @@
+spring:
+  application:
+    name: review-aggregate-service
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: always
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+  packages-to-scan: com.promptoven.reviewBatchService  # 스캔할 패키지 명시
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
+logging:
+  level:
+    org.example.product_admin_service: DEBUG
+
+server:
+  shutdown: graceful
+
+# local 설정
+---
+server:
+  port: 0
+
+spring:
+  application:
+    name: review-batch-service
+  config:
+    import:
+      - classpath:eventTopic.yaml
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
+
+  datasource:
+    url: jdbc:mysql://localhost:3308/reviewBatchService
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  properties:
+    hibernate:
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092,localhost:39092,localhost:49092}
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+# prod 설정
+---
+spring:
+  config:
+    import:
+      - classpath:eventTopic.yaml
+      - "optional:configserver:http://config-server:8888"
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://mysql:3306/review_aggregate
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # prod 환경에서는 validate 권장
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.MySQLDialect
+  kafka:
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+  cloud:
+    config:
+      name: review-aggregate-service,eventTopic
+      fail-fast: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 0
