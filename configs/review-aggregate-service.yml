@@ -36,8 +36,6 @@ server:
   port: 0
 
 spring:
-  application:
-    name: review-batch-service
   config:
     import:
       - classpath:eventTopic.yaml
