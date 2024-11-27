@@ -98,7 +98,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update  # prod ????? validate ??
+      ddl-auto: create
     show-sql: true
     properties:
       dialect: org.hibernate.dialect.MySQL8Dialect
