@@ -1,17 +1,10 @@
 spring:
-  profiles:
-    active: prod
   application:
     name: product-admin-service
   servlet:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-  batch:
-    job:
-      enabled: true
-    jdbc:
-      initialize-schema: always
 
 springdoc:
   api-docs:
@@ -19,29 +12,15 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     display-request-duration: true
-  packages-to-scan: org.example.productadminservice
-  default-produces-media-type: application/json
-  default-consumes-media-type: application/json
-  swagger-ui.operations-sorter: alpha
 
-logging:
-  level:
-    org.example.product_admin_service: DEBUG
-
-server:
-  shutdown: graceful
-
-encrypted:
-  secret-key: PNFKTKKtI6PtL7UQHKTUG8tgWadm/Y2krrXUYlrjZ5Q=
-
-# local 설정
 ---
+# application-prod.yml
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: prod
   datasource:
-    url: jdbc:mysql://localhost:3307/promptoven_product
+    url: jdbc:mysql://mysql:3306/auth
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -50,53 +29,25 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
-      dialect: org.hibernate.dialect.MySQL8Dialect
-      format_sql: true
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
   data:
     mongodb:
-      uri: mongodb://root:1234@mongodb:27017/product_service  # 하이픈을 언더스코어로 수정
+      uri: mongodb://root:1234@mongodb:27017:27017/product-service
+      auto-index-creation: true
   kafka:
-    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+    consumer:
+      group-id: auth-service
+  cloud:
+    config:
+      name: auth-service,eventTopic
+      fail-fast: false
 server:
-  port: 8082
-
-# prod 설정
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-  datasource:
-    url: jdbc:mysql://mysql:3306/promptoven_product
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: validate  # create에서 validate로 변경
-    show-sql: true
-    properties:
-      dialect: org.hibernate.dialect.MySQL8Dialect
-      format_sql: true
-  data:
-    mongodb:
-      uri: mongodb://root:1234@mongodb:27017/product_service  # 하이픈을 언더스코어로 수정
-      auto-index-creation: true  # false에서 true로 변경
-  kafka:
-    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092  # 공백 제거
-
+  port: 8080
+  shutdown: graceful
 eureka:
   client:
     serviceUrl:
@@ -104,8 +55,51 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
+---
+# application-local.yml
+spring:
+  config:
+    import:
+      - "optional:configserver:http://localhost:8888"
+    activate:
+      on-profile: local
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/product-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/promptoven_product
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  cloud:
+    config:
+      name: product-admin-service
+      fail-fast: false
 server:
-  port: 8080
+  port: 0 # random port for security reasons
+  shutdown: graceful
+logging:
+  level:
+    org.springframework.jdbc: DEBUG
+    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    io.lettuce.core: DEBUG
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
