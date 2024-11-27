@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: "optional:configserver:"
   profiles:
     active: prod
   application:
@@ -57,7 +55,7 @@ spring:
     generate-ddl: true
   data:
     mongodb:
-      uri: mongodb://root:1234@mongodb:27017/product_service
+      uri: mongodb://root:1234@mongodb:27017/product-service
   kafka:
     bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
 
@@ -93,7 +91,7 @@ spring:
       dialect: org.hibernate.dialect.MySQL8Dialect
   data:
     mongodb:
-      uri: mongodb://root:1234@mongodb:27017/product_service
+      uri: mongodb://root:1234@mongodb:27017/product-service
       auto-index-creation: false
   kafka:
     bootstrap-servers: kafka-1:9092, kafka-2:9092, kafka-3:9092
