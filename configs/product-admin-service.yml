@@ -62,8 +62,6 @@ eureka:
 # application-local.yml
 spring:
   config:
-    import:
-      - "optional:configserver:http://localhost:8888"
     activate:
       on-profile: local
   data:
