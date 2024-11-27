@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: "configserver:"  # optional 제거
   profiles:
     active: prod
   application:
