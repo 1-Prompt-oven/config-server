@@ -1,58 +1,58 @@
-spring:
-  application:
-    name: product-admin-service
-  servlet:
-    multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
-
-encrypted:
-  secret-key: PNFKTKKtI6PtL7UQHKTUG8tgWadm/Y2krrXUYlrjZ5Q=
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    display-request-duration: true
-
-# prod 설정
-spring:
-  datasource:
-    url: jdbc:mysql://mysql:3306/promptoven_product
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-    generate-ddl: true
-  data:
-    mongodb:
-      uri: mongodb://root:1234@mongodb:27017:27017/product-service
-      auto-index-creation: true
-  kafka:
-    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
-  cloud:
-    config:
-      name: product-admin-service
-      fail-fast: false
-
-server:
-  port: 8080
-  shutdown: graceful
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://discovery:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: false
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+#spring:
+#  application:
+#    name: product-admin-service
+#  servlet:
+#    multipart:
+#      max-file-size: 20MB
+#      max-request-size: 20MB
+#
+#encrypted:
+#  secret-key: PNFKTKKtI6PtL7UQHKTUG8tgWadm/Y2krrXUYlrjZ5Q=
+#
+#springdoc:
+#  api-docs:
+#    path: /v3/api-docs
+#  swagger-ui:
+#    path: /swagger-ui.html
+#    display-request-duration: true
+#
+## prod 설정
+#spring:
+#  datasource:
+#    url: jdbc:mysql://mysql:3306/promptoven_product
+#    username: root
+#    password: 1234
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+#    generate-ddl: true
+#  data:
+#    mongodb:
+#      uri: mongodb://root:1234@mongodb:27017:27017/product-service
+#      auto-index-creation: true
+#  kafka:
+#    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+#  cloud:
+#    config:
+#      name: product-admin-service
+#      fail-fast: false
+#
+#server:
+#  port: 8080
+#  shutdown: graceful
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://discovery:8761/eureka/
+#    register-with-eureka: true
+#    fetch-registry: true
+#  instance:
+#    prefer-ip-address: false
+#    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
