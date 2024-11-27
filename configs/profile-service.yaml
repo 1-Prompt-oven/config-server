@@ -1,0 +1,114 @@
+spring:
+  application:
+    name: profile-service
+  config:
+    import:
+      - classpath:/eventTopic.yaml
+      - classpath:/roles.yaml
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+  nullable-request-parameter-enabled: true
+
+---
+#application-prod.yaml
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import:
+      - classpath:/eventTopic.yaml
+      - classpath:/roles.yaml
+  datasource:
+    url: jdbc:mysql://mysql:3306/profile
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    mongodb:
+      uri: mongodb://mongodb:27017/profile_service?authSource=admin
+      auto-index-creation: false
+      username: root
+      password: 1234
+    redis:
+      host: garnet
+      port: 6379
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+  kafka:
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+    consumer:
+      group-id: profile-service
+server:
+  port: 8080
+  shutdown: graceful
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+---
+#application-local.yaml
+spring:
+  config:
+    activate:
+      on-profile: local
+    import:
+      - classpath:/eventTopic.yaml
+      - classpath:/roles.yaml
+  datasource:
+    url: jdbc:mysql://localhost:3306/profile
+    username: root
+    password: 1234
+  data:
+    mongodb:
+      uri: mongodb://root:1234@localhost:27017/profile_service?directConnection=true&authSource=admin
+      auto-index-creation: true
+    redis:
+      host: localhost
+      port: 6379
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  kafka:
+    text-bootstrap-servers: localhost:9092
+    consumer:
+      group-id: profile-service-group
+      auto-offset-reset: earliest
+
+server:
+  port: 8081
+  shutdown: graceful
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+logging:
+  level:
+    com.promptoven.profileservice.adaptor.redis: DEBUG
+
+
