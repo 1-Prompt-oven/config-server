@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: "configserver:"  # optional 제거
   profiles:
     active: prod
   application:
@@ -55,7 +57,7 @@ spring:
     generate-ddl: true
   data:
     mongodb:
-      uri: mongodb://root:1234@mongodb:27017/product-service
+      uri: mongodb://root:1234@mongodb:27017/product_service  # 하이픈을 언더스코어로 수정
   kafka:
     bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
 
@@ -85,16 +87,17 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate  # create에서 validate로 변경
     show-sql: true
     properties:
       dialect: org.hibernate.dialect.MySQL8Dialect
+      format_sql: true
   data:
     mongodb:
-      uri: mongodb://root:1234@mongodb:27017/product-service
-      auto-index-creation: false
+      uri: mongodb://root:1234@mongodb:27017/product_service  # 하이픈을 언더스코어로 수정
+      auto-index-creation: true  # false에서 true로 변경
   kafka:
-    bootstrap-servers: kafka-1:9092, kafka-2:9092, kafka-3:9092
+    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092  # 공백 제거
 
 eureka:
   client:
