@@ -58,13 +58,7 @@ spring:
     generate-ddl: true
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: prompt_oven
-      username: root
-      password: root
-      authentication-database: admin
-      auto-index-creation: true
+      uri: mongodb://root:1234@mongodb:27017/product_service
   kafka:
     bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
   cloud:
