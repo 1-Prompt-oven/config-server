@@ -13,11 +13,16 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
     generate-ddl: true
   data:
     mongodb:
-      uri: mongodb://root:1234@mongodb:27017/product_service
-      auto-index-creation: true
+      host: mongodb
+      port: 27017
+      database: product_service
+      username: root
+      password: 1234
+      authentication-database: admin  # 인증 데이터베이스 추가
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
   servlet:
@@ -36,7 +41,7 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: false
+    prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 encrypted:
