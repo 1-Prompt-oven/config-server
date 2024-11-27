@@ -1,5 +1,6 @@
-# ?? ??
 spring:
+  config:
+    import: "optional:configserver:"
   profiles:
     active: prod
   application:
@@ -20,7 +21,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     display-request-duration: true
-  packages-to-scan: org.example.productadminservice  # ??? ??? ??
+  packages-to-scan: org.example.productadminservice
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
   swagger-ui.operations-sorter: alpha
@@ -35,7 +36,7 @@ server:
 encrypted:
   secret-key: PNFKTKKtI6PtL7UQHKTUG8tgWadm/Y2krrXUYlrjZ5Q=
 
-# local ??
+# local 설정
 ---
 spring:
   config:
@@ -71,9 +72,9 @@ eureka:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 server:
-  port: 8082  # random port for local development
+  port: 8082
 
-# prod ??
+# prod 설정
 ---
 spring:
   config:
@@ -93,13 +94,9 @@ spring:
   data:
     mongodb:
       uri: mongodb://root:1234@mongodb:27017/product_service
-      auto-index-creation: false  # prod ????? ?? ??? ?? ???? ??
+      auto-index-creation: false
   kafka:
     bootstrap-servers: kafka-1:9092, kafka-2:9092, kafka-3:9092
-  cloud:
-    config:
-      name: product-admin-service
-      fail-fast: false
 
 eureka:
   client:
