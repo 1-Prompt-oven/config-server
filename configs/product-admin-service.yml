@@ -104,7 +104,7 @@ spring:
       dialect: org.hibernate.dialect.MySQL8Dialect
   data:
     mongodb:
-      uri: mongodb://product-service-mongodb-1:27017/product_service
+      uri: mongodb://root:1234@mongodb:27017/product_service
       auto-index-creation: false  # prod ????? ?? ??? ?? ???? ??
   kafka:
     bootstrap-servers: kafka:9092, kafka:9093, kafka:9094
