@@ -39,8 +39,6 @@ encrypted:
 ---
 spring:
   config:
-    import:
-      - "optional:configserver:http://localhost:8888"
     activate:
       on-profile: local
   datasource:
@@ -61,10 +59,6 @@ spring:
       uri: mongodb://root:1234@mongodb:27017/product_service
   kafka:
     bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
-  cloud:
-    config:
-      name: product-admin-service
-      fail-fast: false
 
 eureka:
   client:
@@ -92,7 +86,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update  # prod ????? validate ??
+      ddl-auto: create
     show-sql: true
     properties:
       dialect: org.hibernate.dialect.MySQL8Dialect
