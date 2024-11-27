@@ -39,8 +39,6 @@ encrypted:
 ---
 spring:
   config:
-    import:
-      - "optional:configserver:http://localhost:8888"
     activate:
       on-profile: local
   datasource:
@@ -67,10 +65,6 @@ spring:
       auto-index-creation: true
   kafka:
     bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
-  cloud:
-    config:
-      name: product-admin-service
-      fail-fast: false
 
 eureka:
   client:
