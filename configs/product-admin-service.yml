@@ -98,7 +98,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create  # prod ????? validate ??
+      ddl-auto: update  # prod ????? validate ??
     show-sql: true
     properties:
       dialect: org.hibernate.dialect.MySQL8Dialect
@@ -107,7 +107,7 @@ spring:
       uri: mongodb://root:1234@mongodb:27017/product_service
       auto-index-creation: false  # prod ????? ?? ??? ?? ???? ??
   kafka:
-    bootstrap-servers: kafka:9092, kafka:9093, kafka:9094
+    bootstrap-servers: kafka-1:9092, kafka-2:9092, kafka-3:9092
   cloud:
     config:
       name: product-admin-service
