@@ -17,7 +17,7 @@ spring:
     generate-ddl: true
   data:
     mongodb:
-      uri: mongodb://root:1234@mongodb:27017:27017/product-service
+      uri: mongodb://root:1234@mongodb:27017/product-service
       auto-index-creation: true
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
