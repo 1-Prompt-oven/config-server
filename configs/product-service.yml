@@ -1,4 +1,3 @@
-# 공통 설정
 spring:
   profiles:
     active: local
@@ -8,11 +7,9 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-  batch:
-    job:
-      enabled: true
-    jdbc:
-      initialize-schema: always
+
+encrypted:
+  secret-key: PNFKTKKtI6PtL7UQHKTUG8tgWadm/Y2krrXUYlrjZ5Q=
 
 springdoc:
   api-docs:
@@ -20,29 +17,17 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     display-request-duration: true
-  packages-to-scan: org.example.productservice  # 스캔할 패키지 명시
-  default-produces-media-type: application/json
-  default-consumes-media-type: application/json
-  swagger-ui.operations-sorter: alpha
 
-logging:
-  level:
-    org.example.product_admin_service: DEBUG
-
-server:
-  shutdown: graceful
-
-encrypted:
-  secret-key: ${ENCRYPTED_SECRET_KEY}
-
-# local 설정
 ---
+# application-prod.yml
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile: prod
+    import:
+      - "optional:configserver:http://config-server:8888"
   datasource:
-    url: jdbc:mysql://localhost:3307/promptoven_product
+    url: jdbc:mysql://mysql:3306/promptoven_product
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -51,58 +36,23 @@ spring:
       ddl-auto: update
     show-sql: true
     properties:
-      dialect: org.hibernate.dialect.MySQL8Dialect
-      format_sql: true
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: prompt_oven
-      username: root
-      password: root
-      authentication-database: admin
+      uri: mongodb://root:1234@mongodb:27017/product-service
       auto-index-creation: true
   kafka:
-    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
+    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+  cloud:
+    config:
+      name: product-service
+      fail-fast: false
 server:
-  port: 8081  # random port for local development
-
-# prod 설정
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-  datasource:
-    url: jdbc:mysql://mysql:3306/promptoven_product
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    hibernate:
-      ddl-auto: create  # prod 환경에서는 validate 권장
-    show-sql: true
-    properties:
-      dialect: org.hibernate.dialect.MySQL8Dialect
-  data:
-    mongodb:
-      uri: mongodb://product-service-mongodb-1:27017/product_service
-      auto-index-creation: false  # prod 환경에서는 자동 인덱스 생성 비활성화 권장
-  kafka:
-    bootstrap-servers: kafka:9092, kafka:9093, kafka:9094
-
+  port: 8080
+  shutdown: graceful
 eureka:
   client:
     serviceUrl:
@@ -110,8 +60,53 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
+---
+# application-local.yml
+spring:
+  config:
+    import:
+      - "optional:configserver:http://localhost:8888"
+    activate:
+      on-profile: local
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/product-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/promptoven_product
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  kafka:
+    bootstrap-servers: localhost:9092,localhost:9092,localhost:9092
+  cloud:
+    config:
+      name: product-service
+      fail-fast: false
 server:
-  port: 0  # 운영 환경에서도 랜덤 포트 사용 (Eureka 사용)
+  port: 8081 # random port for security reasons
+  shutdown: graceful
+logging:
+  level:
+    org.springframework.jdbc: DEBUG
+    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    io.lettuce.core: DEBUG
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
