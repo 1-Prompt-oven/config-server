@@ -1,6 +1,7 @@
+# ?? ??
 spring:
   profiles:
-    active: local
+    active: prod
   application:
     name: product-admin-service
   servlet:
@@ -12,8 +13,6 @@ spring:
       enabled: true
     jdbc:
       initialize-schema: always
-  config:
-    import: optional:configserver:http://localhost:8888  # Fixed config server import syntax
 
 springdoc:
   api-docs:
@@ -21,7 +20,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     display-request-duration: true
-  packages-to-scan: org.example.productadminservice
+  packages-to-scan: org.example.productadminservice  # ??? ??? ??
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
   swagger-ui.operations-sorter: alpha
@@ -34,12 +33,14 @@ server:
   shutdown: graceful
 
 encrypted:
-  secret-key: ${ENCRYPTED_SECRET_KEY}
+  secret-key: PNFKTKKtI6PtL7UQHKTUG8tgWadm/Y2krrXUYlrjZ5Q=
 
-# Local Profile
+# local ??
 ---
 spring:
   config:
+    import:
+      - "optional:configserver:http://localhost:8888"
     activate:
       on-profile: local
   datasource:
@@ -68,7 +69,7 @@ spring:
     bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
   cloud:
     config:
-      enabled: true  # Explicitly enable config client
+      name: product-admin-service
       fail-fast: false
 
 eureka:
@@ -82,15 +83,14 @@ eureka:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 server:
-  port: 8082
+  port: 8082  # random port for local development
 
-# Production Profile
+# prod ??
 ---
 spring:
   config:
     activate:
       on-profile: prod
-    import: optional:configserver:http://config-server:8888  # Fixed config server import syntax
   datasource:
     url: jdbc:mysql://mysql:3306/promptoven_product
     username: root
@@ -98,19 +98,19 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: validate  # Changed to validate for production
+      ddl-auto: update  # prod ????? validate ??
     show-sql: true
     properties:
       dialect: org.hibernate.dialect.MySQL8Dialect
   data:
     mongodb:
       uri: mongodb://root:1234@mongodb:27017/product_service
-      auto-index-creation: false
+      auto-index-creation: false  # prod ????? ?? ??? ?? ???? ??
   kafka:
-    bootstrap-servers: kafka:9092,kafka:9093,kafka:9094
+    bootstrap-servers: kafka-1:9092, kafka-2:9092, kafka-3:9092
   cloud:
     config:
-      enabled: true  # Explicitly enable config client
+      name: product-admin-service
       fail-fast: false
 
 eureka:
