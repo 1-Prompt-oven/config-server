@@ -47,7 +47,7 @@ spring:
       name: product-admin-service
       fail-fast: false
 server:
-  port: 8080
+  port: 0
   shutdown: graceful
 eureka:
   client:
@@ -89,7 +89,7 @@ spring:
       name: product-admin-service
       fail-fast: false
 server:
-  port: 0 # random port for security reasons
+  port: 8082 # random port for security reasons
   shutdown: graceful
 logging:
   level:
