@@ -17,12 +17,7 @@ spring:
     generate-ddl: true
   data:
     mongodb:
-      host: mongodb
-      port: 27017
-      database: product_service
-      username: root
-      password: 1234
-      authentication-database: admin  # 인증 데이터베이스 추가
+      uri: mongodb://root:1234@15.164.251.81:27017/product-service?authSource=admin
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
   servlet:
