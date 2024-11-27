@@ -1,8 +1,58 @@
 spring:
   application:
     name: product-admin-service
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+---
+# application-prod.yml
+spring:
+  config:
+    activate:
+      on-profile: prod
   datasource:
     url: jdbc:mysql://mysql:3306/promptoven_product
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+  data:
+    mongodb:
+      uri: mongodb://root:1234@mongodb:27017/reviewDB?directConnection=true
+  kafka:
+    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+server:
+  port: 8080
+  shutdown: graceful
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: false
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+---
+# application-local.yml
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/promptoven_product
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,38 +63,26 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
-    generate-ddl: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
   data:
     mongodb:
-      uri: mongodb://root:1234@15.164.251.81:27017/product-service?authSource=admin
+      uri: mongodb://localhost:27017/reviewDB?directConnection=true
   kafka:
-    bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
-  servlet:
-    multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
-
+    bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
 server:
-  port: 8080
+  port: 0 # random port for security reasons
   shutdown: graceful
-
+logging:
+  level:
+    org.springframework.jdbc: DEBUG
+    org.springframework.transaction: DEBUG
+    org.springframework.orm.jpa: DEBUG
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://discovery:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     fetch-registry: true
   instance:
-    prefer-ip-address: true
+    prefer-ip-address: false
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
-encrypted:
-  secret-key: PNFKTKKtI6PtL7UQHKTUG8tgWadm/Y2krrXUYlrjZ5Q=
-
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    display-request-duration: true
