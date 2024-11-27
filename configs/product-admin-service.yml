@@ -33,7 +33,7 @@ server:
   shutdown: graceful
 
 encrypted:
-  secret-key: ${ENCRYPTED_SECRET_KEY}
+  secret-key: PNFKTKKtI6PtL7UQHKTUG8tgWadm/Y2krrXUYlrjZ5Q=
 
 # local ??
 ---
@@ -108,6 +108,10 @@ spring:
       auto-index-creation: false  # prod ????? ?? ??? ?? ???? ??
   kafka:
     bootstrap-servers: kafka:9092, kafka:9093, kafka:9094
+  cloud:
+    config:
+      name: product-admin-service
+      fail-fast: false
 
 eureka:
   client:
@@ -121,9 +125,3 @@ eureka:
 
 server:
   port: 8080
-
-logging:
-  level:
-    org.springframework.jdbc: DEBUG
-    org.springframework.transaction: DEBUG
-    org.springframework.orm.jpa: DEBUG
