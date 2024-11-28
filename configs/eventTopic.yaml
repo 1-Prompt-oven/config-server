@@ -16,7 +16,8 @@ profile-nickname-update-request-event: profile-nickname-update-requested # {memb
 #Auth Service에서 변경된 값을 받아 처리하는 것이다.
 
 # Payment Service Produced
-payment-create-event: payment-create-event # {paymentId : String, memberUUID : String, productUUID : List<String>}
+payment-create-event: payment-create-event # {paymentId : Long, memberUUID : String, productUUID : List<String>, productSellerMap : Map<String, String>}
+payment-cookie-create-event: payment-cookie-create-event # {paymentId : Long, memberUUID : String, cookieAmount : Integer, approveAt : LocalDateTime}
 
 # Review Service Produced
 review-create-event: review-created
