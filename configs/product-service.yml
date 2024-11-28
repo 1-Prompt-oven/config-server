@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local
+    active: prod
   application:
     name: product-service
   servlet:
@@ -44,10 +44,6 @@ spring:
       auto-index-creation: true
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
-  cloud:
-    config:
-      name: product-service
-      fail-fast: false
 server:
   port: 8080
   shutdown: graceful
@@ -64,8 +60,6 @@ eureka:
 # application-local.yml
 spring:
   config:
-    import:
-      - "optional:configserver:http://localhost:8888"
     activate:
       on-profile: local
   data:
@@ -86,10 +80,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
   kafka:
     bootstrap-servers: localhost:9092,localhost:9092,localhost:9092
-  cloud:
-    config:
-      name: product-service
-      fail-fast: false
 server:
   port: 8081 # random port for security reasons
   shutdown: graceful
