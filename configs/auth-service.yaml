@@ -13,7 +13,7 @@ jwt:
     public: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyDB0yGhq5HP0d8xrWk3wSgYCDVv1ZP2FTCFVN4Kk+WwT7noPQtWCM6ceP2xNsNWRus5Yhbg6t5W3LS1W65sHRL7QIHXppsqUSMzYHXc9F5zIxSE+hFOylAuvn+ntMlbnyLitd/Zf5+NzCPlwVakMx36JfMZPT47/e3L0ZnFun2aZOd3szWD+N4jiltM79/sQbKsEBhZb2Rw32FPvGYJMP/SyesqvRYm/N6Phu/o7ExINzo/2JJewcgh2UQiZnikZOgDF97o5PI4O41rbdvYrDQ8wN8H7pN5klvL66Voek1K0bWny2cGRraEGIc9hf+oeaO6EW1zaTKK6j/F9R6AZDQIDAQAB
   expiration:
     refresh: 86400000 # 24 hours
-    access: 600000 # 10 minutes
+    access: 1800000 # 30 minutes
 
 springdoc:
   api-docs:
