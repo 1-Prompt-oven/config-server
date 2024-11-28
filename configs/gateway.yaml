@@ -24,12 +24,7 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins:
-              - http://localhost:3000
-              - http://localhost:3001
-              - http://promptoven.shop:3000
-              - http://promptoven.shop:3001
-              - http://www.promptoven.shop:3000
-              - http://www.promptoven.shop:3001
+              - "*"
             allowedHeaders:
               - x-requested-with
               - Authorization
