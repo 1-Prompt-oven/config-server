@@ -23,9 +23,7 @@ spring:
       - classpath:/eventTopic.yaml
       - classpath:/roles.yaml
   datasource:
-    url: jdbc:mysql://mysql:3306/profile
-    username: root
-    password: 1234
+    uri: mongodb://root:1234@mongodb:27017/product-service
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     mongodb:
