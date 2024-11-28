@@ -1,0 +1,87 @@
+# 공통 설정
+spring:
+  profiles:
+    active: local
+  application:
+    name: exhibition-service
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+  packages-to-scan: com.promptoven.exhibitionservice
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+  swagger-ui.operations-sorter: alpha
+
+logging:
+  level:
+    com.promptoven.exhibitionservice: DEBUG
+
+server:
+  shutdown: graceful
+
+# local 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+    import:
+      - "optional:configserver:http://localhost:8888"
+  datasource:
+    url: jdbc:mysql://localhost:3306/cart_service
+    username: root
+    password: jiwon1923
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  cloud:
+    config:
+      enabled: false
+server:
+  port: 8085
+
+# prod 설정
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import:
+      - "optional:configserver:http://config-server:8888"
+  datasource:
+    url: jdbc:mysql://mysql:3306/exhibition
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  cloud:
+    config:
+      name: exhibition-service
+      fail-fast: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 8080
