@@ -38,7 +38,7 @@ spring:
     generate-ddl: true
   data:
     mongodb:
-      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/product-service?ssl=true&tlsAllowInvalidCertificates=true
+      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
   cloud:
