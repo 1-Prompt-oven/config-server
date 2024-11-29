@@ -31,7 +31,6 @@ spring:
     activate:
       on-profile: local
     import:
-      - "optional:configserver:http://localhost:8888"
       - classpath:eventTopic.yml
   datasource:
     url: jdbc:mysql://localhost:3306/cart_service
@@ -55,9 +54,6 @@ spring:
     secret-key: ${TOSS_SECRET_KEY}
     callback-url: "/api/payments/callback"
 
-server:
-  port: 8082
-
 # prod 설정
 ---
 spring:
@@ -66,7 +62,6 @@ spring:
       on-profile: prod
     import:
       - classpath:eventTopic.yml
-      - "optional:configserver:http://config-server:8888"
   datasource:
     url: jdbc:mysql://mysql:3306/payment
     username: root
@@ -81,10 +76,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
   kafka:
     text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
-  cloud:
-    config:
-      name: payment-service,eventTopic
-      fail-fast: false
 eureka:
   client:
     serviceUrl:
