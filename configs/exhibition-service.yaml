@@ -28,8 +28,6 @@ spring:
   config:
     activate:
       on-profile: local
-    import:
-      - "optional:configserver:http://localhost:8888"
   datasource:
     url: jdbc:mysql://localhost:3306/cart_service
     username: root
@@ -42,9 +40,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-  cloud:
-    config:
-      enabled: false
 server:
   port: 8085
 
@@ -54,8 +49,6 @@ spring:
   config:
     activate:
       on-profile: prod
-    import:
-      - "optional:configserver:http://config-server:8888"
   datasource:
     url: jdbc:mysql://mysql:3306/exhibition
     username: root
@@ -68,11 +61,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-  cloud:
-    config:
-      name: exhibition-service
-      fail-fast: false
-
 eureka:
   client:
     serviceUrl:
@@ -82,6 +70,5 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-
 server:
   port: 8080
