@@ -24,7 +24,6 @@ logging:
 server:
   shutdown: graceful
 
-
 # local 설정
 ---
 spring:
