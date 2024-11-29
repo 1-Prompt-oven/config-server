@@ -20,6 +20,9 @@ springdoc:
 logging:
   level:
     com.promptoven.sellerbatchservice: DEBUG
+batch:
+    jdbc:
+      initialize-schema: always
 
 server:
   shutdown: graceful
@@ -46,10 +49,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
   kafka:
     text-bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
-
-  batch:
-    jdbc:
-      initialize-schema: always
 
 server:
   port: 8083
