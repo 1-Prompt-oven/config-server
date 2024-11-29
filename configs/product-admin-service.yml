@@ -38,7 +38,7 @@ spring:
     generate-ddl: true
   data:
     mongodb:
-      uri: mongodb://root:1234@mongodb:27017/product-service
+      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
       auto-index-creation: true
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
@@ -68,7 +68,7 @@ spring:
       on-profile: local
   data:
     mongodb:
-      uri: mongodb://localhost:27017/product-service
+      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
   datasource:
     url: jdbc:mysql://localhost:3306/promptoven_product
     username: root
