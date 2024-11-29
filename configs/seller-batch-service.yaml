@@ -6,6 +6,9 @@ spring:
     name: seller-batch-service
   config:
     import: classpath:eventTopic.yml
+  batch:
+    jdbc:
+      initialize-schema: always
 
 springdoc:
   api-docs:
@@ -20,9 +23,6 @@ springdoc:
 logging:
   level:
     com.promptoven.sellerbatchservice: DEBUG
-batch:
-    jdbc:
-      initialize-schema: always
 
 server:
   shutdown: graceful
