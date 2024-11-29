@@ -46,9 +46,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
   kafka:
     text-bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
-  cloud:
-    config:
-      enabled: false
 
 server:
   port: 8082
