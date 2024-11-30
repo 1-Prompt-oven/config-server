@@ -85,7 +85,7 @@ jwt:
     access: 600000 # 10 minutes
 
 gateway:
-  host: "http://localhost:8000"
+  host: "http://localhost:8000/"
 
 
 
@@ -110,4 +110,4 @@ eureka:
     prefer-ip-address: true
 
 gateway:
-  host: "https://api.promptoven.shop"
+  host: "https://api.promptoven.shop/"
