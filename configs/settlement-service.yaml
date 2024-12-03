@@ -35,7 +35,24 @@ eureka:
 
 encrypter:
   secret-key: "IQDVvuZqN2ulwDf2qcPJ/J9kJqxkxhKApAvLf2bh3zw="
-
+management:
+  # endpoint 노출
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans,info,configprops"
+      base-path: /actuator
+  # endpoint 활성화/비활성화
+  endpoint:
+    health:
+      enabled: true
+    metrics:
+      enabled: true
+      tags:
+        application: ${spring.application.name}
+    prometheus:
+      enabled: true
 ---
 spring:
   config:
