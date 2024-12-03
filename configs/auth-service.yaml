@@ -20,7 +20,24 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
-
+management:
+  # endpoint 노출
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+        exclude: "env,beans,info,configprops"
+      base-path: /actuator
+  # endpoint 활성화/비활성화
+  endpoint:
+    health:
+      enabled: true
+    metrics:
+      enabled: true
+      tags:
+        application: ${spring.application.name}
+    prometheus:
+      enabled: true
 ---
 # application-prod.yml
 spring:
