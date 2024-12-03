@@ -100,7 +100,7 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092,localhost:9092,localhost:9092
 server:
-  port: 8081 # random port for security reasons
+  port: 8080 # random port for security reasons
   shutdown: graceful
 logging:
   level:
