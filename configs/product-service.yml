@@ -62,7 +62,7 @@ spring:
   kafka:
     bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
 server:
-  port: 0
+  port: 8080
   shutdown: graceful
 eureka:
   client:
