@@ -57,7 +57,6 @@ spring:
   config:
     import:
       - classpath:eventTopic.yaml
-      - "optional:configserver:http://config-server:8888"
     activate:
       on-profile: prod
   jpa:
