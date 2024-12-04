@@ -44,7 +44,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     mongodb:
-      uri: mongodb://mongodb:27017/profile_service?authSource=admin
+      uri: ${MONGO}
       auto-index-creation: false
       username: root
       password: 1234
