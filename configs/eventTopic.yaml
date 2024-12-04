@@ -40,3 +40,8 @@ review-update-event: review-updated
 #    previousStar: int
 # }
 review-delete-event: review-deleted # {reviewId: Long, String authorUuid, productUuid: String, star: int}
+aggregate-finish-event : aggregate-finished 
+# {
+#    Map<String, Double> productAggregateMap; // productUuid : avgStar
+#    Map<String, Double> sellerAggregateMap;  // sellerUuid : avgStar
+# }
