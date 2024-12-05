@@ -33,6 +33,7 @@ spring:
               - credential
               - X-AUTH-TOKEN
               - X-CSRF-TOKEN
+              - X-Session-ID
             allowedMethods:
               - PUT
               - GET
