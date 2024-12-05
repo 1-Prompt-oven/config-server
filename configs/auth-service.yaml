@@ -80,9 +80,6 @@ eureka:
   instance:
     prefer-ip-address: false
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-logging:
-  level:
-    com.promptoven.authservice.adaptor.web.controller: DEBUG
 ---
 # application-local.yml
 spring:
