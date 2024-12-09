@@ -13,6 +13,16 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+mailing:
+  admin-and-investor:
+    - "astar5327z@gmail.com"
+    - "jaehunlee526@gmail.com"
+    - "yuseok.kim@edushare.kr"
+    - "singyu13@gmail.com"
+    - "jangdebug@gmail.com"
+    - "osb4469@gmail.com"
+    - "qjsduddl12@gmail.com"
+    - "hitkey0925@gmail.com"
 
 encrypter:
   secret-key: "IQDVvuZqN2ulwDf2qcPJ/J9kJqxkxhKApAvLf2bh3zw="
