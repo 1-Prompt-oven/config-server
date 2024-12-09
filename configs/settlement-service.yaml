@@ -4,55 +4,17 @@ spring:
   config:
     import:
       - classpath:eventTopic.yaml
-  datasource:
-    url: jdbc:mysql://localhost:3306/settlement
-    username: root
-    password: 1234
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-server:
-  port: 0
-  shutdown: graceful
+      - classpath:taxRate.yaml
+
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 encrypter:
   secret-key: "IQDVvuZqN2ulwDf2qcPJ/J9kJqxkxhKApAvLf2bh3zw="
-management:
-  # endpoint 노출
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-        exclude: "env,beans,info,configprops"
-      base-path: /actuator
-  # endpoint 활성화/비활성화
-  endpoint:
-    health:
-      enabled: true
-    metrics:
-      enabled: true
-      tags:
-        application: ${spring.application.name}
-    prometheus:
-      enabled: true
+
 ---
 spring:
   config:
@@ -60,6 +22,7 @@ spring:
       on-profile: prod
     import:
       - classpath:eventTopic.yaml
+      - classpath:taxRate.yaml
   datasource:
     url: jdbc:mysql://mysql:3306/settlement
     username: root
@@ -68,13 +31,12 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
-
   kafka:
     text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
     consumer:
@@ -90,4 +52,36 @@ eureka:
     fetch-registry: true
   instance:
     prefer-ip-address: false
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+    import:
+      - classpath:eventTopic.yaml
+      - classpath:taxRate.yaml
+  datasource:
+    url: jdbc:mysql://localhost:3306/settlement
+    username: root
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  port: 0
+  shutdown: graceful
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
