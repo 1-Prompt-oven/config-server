@@ -1,0 +1,39 @@
+promptoven:
+  charge-rate: 0.1
+
+korea-tax:
+  regional: 0.1 #지방세법 근거 지방소득세율(국세 대비 10% 지방세 추가 부과)
+  individual:
+    other-business-border: 5000000 #기타소득과 사업소득의 경계 금액 24.12 기준 500만원
+    #소득세법 19조 1항 21목, 19조 1항 단서, 21조 1항 8호의2 근거
+    #소득세법 시행령 41조 7항 근거 5,000,000 이하는 기타소득으로 간주 가능
+    business-rate: 0.03
+    #소득세법 129조 1항 3호 근거, 사업소득 원천 징수율
+    other-rate: 0.08
+    other-ignore-border: 125000
+    #소득세법 129조 1항 6호 라목 근거 20% 세율
+    #소득세법 시행령 87조 1호의 2따라 기준경비율 60%를 과세 표준에서 제외
+    #소득세법 86조 근거 기타소득 경우 원천징수 대상 금액이 1000원이 안 되면 소액 부징수
+    # 그래서 12만 5천원이 안 되면 소액부징수 가능
+  cooperation:
+    #rate : 세율, border 경계(~이하), exclude: 누진세율 관련 현재 세율 적용 전 금액, include: exclude 금액에 대한 하위 세율 적용된 세금
+    level0:
+      rate: 0.09
+      border: 200000000
+      exclude: 0
+      include: 0
+    level1:
+      rate: 0.19
+      border: 20000000000
+      exclude: 200000000
+      include: 18000000
+    level2:
+      rate: 0.21
+      border: 300000000000
+      exclude: 20000000000
+      include: 3780000000
+    level3:
+      rate: 0.24
+      border: 0
+      exclude: 300000000000
+      include: 62580000000
