@@ -5,7 +5,9 @@ spring:
     import:
       - classpath:eventTopic.yaml
       - classpath:taxRate.yaml
-
+  mail:
+    password: ${MAIL_PASSWORD}
+    username: kr.promptoven@gmail.com
 springdoc:
   api-docs:
     path: /v3/api-docs
