@@ -49,7 +49,6 @@ spring:
   config:
     import:
       - classpath:eventTopic.yaml
-      - "optional:configserver:http://config-server:8888"
     activate:
       on-profile: prod
   jpa:
@@ -61,11 +60,6 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
-  cloud:
-    config:
-      name: chat-service,eventTopic
-      fail-fast: false
-
 eureka:
   client:
     serviceUrl:
