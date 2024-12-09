@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: chat-service
+  data:
+    mongodb:
+      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+  packages-to-scan: com.promptoven.chatservice  # 스캔할 패키지 명시
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
+logging:
+  level:
+    org.example.product_admin_service: DEBUG
+
+server:
+  shutdown: graceful
+
+# local ??
+---
+server:
+  port: 8585
+
+spring:
+  application:
+    name: chat-service
+  data:
+    mongodb:
+      uri: mongodb://localhost:27018/chatDB?directConnection=true
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+# prod ??
+---
+spring:
+  config:
+    import:
+      - classpath:eventTopic.yaml
+      - "optional:configserver:http://config-server:8888"
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: update  # prod 환경에서는 validate 권장
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.MySQLDialect
+  data:
+    mongodb:
+      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
+  cloud:
+    config:
+      name: chat-service,eventTopic
+      fail-fast: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 8080
