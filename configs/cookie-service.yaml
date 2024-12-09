@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: cookie-service
+  data:
+    mongodb:
+      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
+  kafka:
+    text-bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+    consumer:
+      group-id: cookie-service
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+  packages-to-scan: com.promptoven.cookieService  # 스캔할 패키지 명시
+  default-produces-media-type: application/json
+  default-consumes-media-type: application/json
+
+logging:
+  level:
+    org.example.product_admin_service: DEBUG
+
+server:
+  shutdown: graceful
+
+# local 설정
+---
+server:
+  port: 8083
+
+spring:
+  application:
+    name: cookie-service
+  config:
+    import:
+      - classpath:eventTopic.yml
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/reviewDB?directConnection=true
+  #      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
+  kafka:
+    text-bootstrap-servers: localhost:29092,localhost:39092,localhost:49092
+    consumer:
+      group-id: cookie-service
+
+# prod 설정
+---
+spring:
+  config:
+    import:
+      - classpath:eventTopic.yml
+    activate:
+      on-profile: prod
+  jpa:
+    hibernate:
+      ddl-auto: update  # prod 환경에서는 validate 권장
+    show-sql: true
+    properties:
+      dialect: org.hibernate.dialect.MySQLDialect
+  data:
+    mongodb:
+      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
+  kafka:
+    text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+server:
+  port: 8080
