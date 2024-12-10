@@ -58,7 +58,6 @@ spring:
   config:
     import:
       - classpath:eventTopic.yml
-      - "optional:configserver:http://config-server:8888"
     activate:
       on-profile: prod
   jpa:
@@ -72,10 +71,6 @@ spring:
       uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven
   kafka:
     text-bootstrap-servers: kafka-1:9092,kafka-2:9092,kafka-3:9092
-  cloud:
-    config:
-      name: cookie-service,eventTopic
-      fail-fast: false
 
 eureka:
   client:
