@@ -10,10 +10,10 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
-    operations-sorter: alpha
-  packages-to-scan: com.promptoven.chatservice  # 스캔할 패키지 명시
+  packages-to-scan: com.promptoven.chatservice
   default-produces-media-type: application/json
   default-consumes-media-type: application/json
+  swagger-ui.operations-sorter: alpha
 
 logging:
   level:
