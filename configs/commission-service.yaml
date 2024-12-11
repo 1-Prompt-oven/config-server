@@ -19,7 +19,7 @@ springdoc:
 
 logging:
   level:
-    com.promptoven.cartservice: DEBUG
+    com.promptoven.commissionservice: DEBUG
 
 server:
   shutdown: graceful
