@@ -18,6 +18,16 @@ spring:
       port: 6379
   cloud:
     gateway:
+      routes:
+        - id: chat-service
+          uri: lb://chat-service
+          predicates:
+            - Path =/chat/**
+          filters:
+            -StripPrefix=1
+      websocket:
+        proxy:
+          enable: true
       default-filters: # 기본 필터 설정
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
       global-cors: # 글로벌 CORS 설정
