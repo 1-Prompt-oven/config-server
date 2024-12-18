@@ -3,7 +3,7 @@ spring:
     name: chat-service
   data:
     mongodb:
-      uri: uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven&connectTimeoutMS=30000&socketTimeoutMS=30000
+      uri: mongodb+srv://1630202:minjihun@promptoven.5ld4d.mongodb.net/promptoven?retryWrites=true&w=majority&appName=promptoven&connectTimeoutMS=30000&socketTimeoutMS=30000
 
 springdoc:
   api-docs:
